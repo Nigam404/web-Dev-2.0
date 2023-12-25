@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Updating Details From CRUDCRUD</title>
+    <!--CSS  start from here-->
+    <style>
+      form {
+        text-align: center;
+        border: 2px solid rgb(0, 0, 0);
+        border-radius: 20px;
+        padding: 50px 50px;
+        opacity: 1;
+        background-color: rgb(243, 234, 222);
+        font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+      }
+      #d1 {
+        text-align: center;
+      }
+      #d2 {
+        padding-left: 200px;
+        padding-right: 200px;
+        opacity: 0.9;
+      }
+      h2,
+      #submit {
+        color: rgb(0, 191, 255);
+      }
+      input {
+        width: 90%;
+      }
+      body {
+        background-image: url(https://support.cc/images/blog/customer-service.png?v=1670937648334597318);
+        background-repeat: no-repeat;
+        background-size: cover;
+      }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.min.js"></script>
+  </head>
+
+  <!--.............................................................................................................................-->
+  <body>
+    <div id="d2">
+      <form>
+        <div id="d1">
+          <h2>Book a call</h2>
+          <p>
+            Book a call slot and our representative will call you within 1 hr of
+            selected time.
+          </p>
+        </div>
+        <hr />
+
+        <lebel for="name">Name:</lebel><br />
+        <input type="text" name="name" id="name" required /><br />
+
+        <lebel for="email">Email:</lebel><br />
+        <input type="mail" name="email" id="email" required /><br />
+
+        <lebel for="phone">Phone:</lebel><br />
+        <input type="number" name="phone" id="phone" required /><br />
+
+        <lebel for="date">Time for Call:</lebel><br />
+        <input type="date" name="date" id="date" required />
+        <input type="time" name="time" id="time" required /><br />
+
+        <button type="button" id="submit" onclick="getData()">
+          Make a call
+        </button>
+      </form>
+      <ul id="datalist"></ul>
+    </div>
+
+    <!--Js start from here-->
+    <script>
+      let parentEle = document.getElementById("datalist");
+      //SUBMIT BUTTON CLICK EVENT..........................................................................................
+      function createElement(obj) {
+        let li = document.createElement("li");
+        let textNode = document.createTextNode(
+          obj.name +
+            " " +
+            obj.mail +
+            " " +
+            obj.phone +
+            " " +
+            obj.date +
+            " " +
+            obj.time
+        );
+        li.appendChild(textNode);
+
+        //Creating delete button
+        let deletebtn = document.createElement("button");
+        deletebtn.className = "delete";
+        deletebtn.appendChild(document.createTextNode("X"));
+        //Delete button click event
+        deletebtn.onclick = () => {
+          axios.delete(`http://localhost:3000/api/${obj.id}`).then((res) => {
+            parentEle.removeChild(li); //removing list from UI
+          });
+        };
+        li.appendChild(deletebtn);
+
+        //Creating edit button
+        let editbtn = document.createElement("button");
+        editbtn.className = "edit";
+        editbtn.appendChild(document.createTextNode("EDIT"));
+        //Edit button click event
+        editbtn.onclick = () => {
+          axios
+            .get(`http://localhost:3000/api/${obj.id}`)
+            .then((res) => {
+              //putting list data back in field
+              document.getElementById("name").value = res.data.name;
+              document.getElementById("email").value = res.data.mail;
+              document.getElementById("phone").value = res.data.phone;
+              document.getElementById("date").value = res.data.date;
+              document.getElementById("time").value = res.data.time;
+              console.log(res);
+            })
+            .then(() => {
+              deletebtn.onclick(); //removing wriong data from UI and server
+              alert("Edit the data in field and submit again");
+            });
+        };
+        li.appendChild(editbtn);
+
+        parentEle.appendChild(li);
+      }
+
+      //submit button click event...DRIVER function
+      async function getData() {
+        let obj = {
+          name: document.getElementById("name").value,
+          mail: document.getElementById("email").value,
+          phone: document.getElementById("phone").value,
+          date: document.getElementById("date").value,
+          time: document.getElementById("time").value,
+        };
+        //STORING DATA IN DB USING AXIOS.
+        await axios
+          .post("http://localhost:3000/api/", obj)
+          .then((updatedObj) => {
+            createElement(updatedObj); //calling createElement function.
+          })
+          .catch((err) => console.log(err));
+      }
+
+      //FETCHING DATA FROM SERVER WHEN DOM RELOADS............................................................................
+
+      axios.get("http://localhost:3000/api/").then((res) => {
+        res.data.forEach((e) => {
+          //res.data contain array of JSON object
+          createElement(e);
+        });
+      });
+    </script>
+  </body>
+</html>
