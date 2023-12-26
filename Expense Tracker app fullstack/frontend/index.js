@@ -21,7 +21,7 @@ function createElement(obj) {
     document.getElementById("catagory").value = obj.catagory;
 
     axios
-      .delete(`http://localhost:4000/api/:${obj.id}`)
+      .delete(`http://localhost:4000/api/${obj.id}`)
       .then(() => {
         alert("edit and submit again");
         ULlist.removeChild(newLi);
