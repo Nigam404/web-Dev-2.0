@@ -28,7 +28,7 @@ exports.postAddProduct = (req, res, next) => {
   //method 2-through sequelize method
   req.user
     .createProduct({
-      //this is a auto generated function depending on our model name.this will set user 
+      //this is a auto generated function depending on our model name.this will set user
       //id in product table and manage relationship among product and user table.
       title: title,
       price: price,

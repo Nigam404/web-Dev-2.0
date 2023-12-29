@@ -26,7 +26,7 @@ exports.getSingleProduct = (req, res, next) => {
         path: "/products",
       });
     })
-    .catch(() => {
+    .catch((err) => {
       console.log(err);
     });
 
