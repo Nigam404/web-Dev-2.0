@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <form>
+      Name:<input type="text" id="name" name="name" /> <br />
+      Date of Birth:<input type="date" id="dob" name="dob" /><br />
+      Photo URL:<input type="text" id="photourl" name="photourl" /><br />
+      Birth Place:<input type="text" id="place" name="place" /><br />
+      Career:<input type="text" id="career" name="career" /><br />
+      Number of Matches:<input type="number" id="match" name="match" /><br />
+      Score:<input type="number" id="score" name="score" /><br />
+      Fifties:<input type="number" id="fifty" name="fifty" /><br />
+      Centuries:<input type="number" id="century" name="century" /><br />
+      Wickets:<input type="number" id="wicket" name="wicket" /><br />
+      Average:<input type="number" id="average" name="average" /><br />
+
+      <button type="button" id="submit">Submit</button>
+      <hr />
+      <input
+        type="text"
+        name="search_field"
+        id="search_field"
+        placeholder="Search Player"
+      />
+      <button id="search">Search</button>
+    </form>
+    <div id="result_div"></div>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.min.js"></script>
+    <script src="./index.js"></script>
+  </body>
+</html>
