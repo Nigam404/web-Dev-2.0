@@ -1,0 +1,20 @@
+.slot{
+    border-style: solid;
+
+}
+input.availability{
+    width: 30px;
+    border: none;
+    text-align: center;
+    color: green;
+}
+input{
+    border: none;
+    background: transparent;
+}
+div.slot{
+    width: 120px;
+}
+.heading{
+    text-align: center;
+}
